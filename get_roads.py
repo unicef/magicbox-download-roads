@@ -6,8 +6,8 @@ import osmnx as ox
 from unicef_programme_countries import countries
 from os import path
 
-graph_path = sys.argv[1]
-
+#graph_path = sys.argv[1]
+graph_path = "graphs/"
 def makeGraph(country):
     """ Given a country's name and a path to store graphs, 
     retrieves its road network writes edgelist and vertices list

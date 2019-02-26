@@ -22,3 +22,7 @@ And for a list of Belize's road eges (first two edges shown):
 
 (Note: Column names are truncated in the .csv files)
 
+```
+python store_igraph.py <Name of country>
+```
+Retrieves the country's road graph via OSMNX and stores it as an igraph Graph object, which can be pickled in later code. 
