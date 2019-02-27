@@ -7,12 +7,14 @@ import sys
 import pickle
 
 # imports only a dictionary of UNICEF programme countries mapped to country codes
-from iso_country_codes import *
+from iso_country_codes import CC
 
 ox.config(use_cache=True, log_console=True)
 weight = 'length'
 
 country_name = sys.argv[1]
+graph_storage_path = sys.argv[2]
+
 try:
     country_code = CC[country_name]
 except:

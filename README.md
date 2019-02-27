@@ -1,6 +1,18 @@
 Scripts to download, store, analyze, and visualize road network graphs of UNICEF Programme Countries, used to preprocess MagicBox data. 
 
-*Usage*:
+
+*Usage (with fast graph library)*:
+To download graphs for all UNICEF programme countries (listed in the repo):
+```
+python get_roads_ig.py <path to graph storage>
+```
+To download graph for a single country:
+```
+python store_igraph.py <name of country> <path to graph storage>
+```
+A pickled Python iGraph object is stored, labeled by alpha-2 country code. 
+
+*Usage (to generate .csvs for other graph network tools)*:
 ```
 python get_roads.py <path to graph storage>
 ```
@@ -21,8 +33,3 @@ And for a list of Belize's road eges (first two edges shown):
 | 4326686740     | 4326686711          | 112.534              | 18.4626269           | -88.3022409           | 18.4623914                | -88.3012395                | False                | unclassified  |
 
 (Note: Column names are truncated in the .csv files)
-
-```
-python store_igraph.py <Name of country>
-```
-Retrieves the country's road graph via OSMNX and stores it as an igraph Graph object, which can be pickled in later code. 
