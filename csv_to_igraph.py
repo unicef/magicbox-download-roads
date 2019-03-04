@@ -1,5 +1,6 @@
 import pandas as pd
 import igraph as ig
+import pickle
 
 import sys
 
@@ -13,7 +14,7 @@ edf = pd.read_csv(edges_path)
 
 def get_index_by_id(id):
 	for row in range(vdf.shape[0]): # df is the DataFrame
-	    if vdf['id'][row] == name:
+	    if vdf['id'][row] == id:
 	    	return row
 	    	break
 
@@ -22,9 +23,11 @@ for i in range(len(edf['src'])):
 	edge_list.append([get_index_by_id(edf['src'][i]), get_index_by_id(edf['dst'][i])])
 
 G = ig.Graph(directed=True)
-G.add_vertices(vdf['name'])
+G.add_vertices(vdf['id'])
+G.vs['osmid'] = vdf['id']
 G.vs['x'] = vdf['lat']
 G.vs['y'] = vdf['lon']
+
 G.add_edges(edge_list)
 G.es['length'] = edf['length']
 G.es['oneway'] = edf['oneway']
