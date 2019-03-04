@@ -49,8 +49,8 @@ assert len(G_nx.nodes()) == G_ig.vcount()
 assert len(G_nx.edges()) == G_ig.ecount()
 
 print("Serializing igraph")
-pickle.dump(G_ig, open("igraph/" + country_code + "_roads_igraph.p", "wb"))
+pickle.dump(G_ig, open(graph_storage_path + "/" + country_code + "_roads_igraph.p", "wb"))
 
 print("igraph storage completed")
 print(str(G_ig_num_v) + " vertices, " + str(G_ig_num_e) + " edges stored")
-print("Graph located at igraph/" + country_code + "_roads_igraph.p")
+print("Graph located at" + graph_storage_path+ "/" + country_code + "_roads_igraph.p")

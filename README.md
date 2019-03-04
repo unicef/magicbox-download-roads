@@ -1,7 +1,17 @@
 Scripts to download, store, analyze, and visualize road network graphs of UNICEF Programme Countries, used to preprocess MagicBox data. 
 
+*Prerequisite:
+Pull the docker image (which contains osmnx and igraph) from the Docker hub:
+```
+sudo docker pull msradam/magicbox-tools
+```
+Then run bash:
+```
+sudo docker run --rm -it -u 0 --name osmnx -v "$PWD":/home/jovyan/work msradam/magicbox-tools /bin/bash
+```
 
 *Usage (with fast graph library)*:
+
 To download graphs for all UNICEF programme countries (listed in the repo):
 ```
 python get_roads_ig.py <path to graph storage>
