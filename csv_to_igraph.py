@@ -19,7 +19,7 @@ def get_index_by_id(id):
 
 edge_list = []
 for i in range(len(edf['src'])):
-	edge_list.append([get_index_by_name(edf['src'][i]), get_index_by_name(edf['dst'][i])])
+	edge_list.append([get_index_by_id(edf['src'][i]), get_index_by_id(edf['dst'][i])])
 
 G = ig.Graph(directed=True)
 G.add_vertices(vdf['name'])
