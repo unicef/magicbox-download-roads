@@ -2,10 +2,10 @@ import csv
 import multiprocessing
 import sys, os
 import osmnx as ox 
-
-from unicef_programme_countries import countries
+import json
 from os import path
-
+with open('countries.json') as f:
+    countries = json.load(f)
 #graph_path = sys.argv[1]
 graph_path = "graphs/"
 def makeGraph(country):
@@ -14,9 +14,8 @@ def makeGraph(country):
     .csv's to path
     """
 
-    cf = country.lower().replace(' ', '_')
-    edges_file = cf + "_roads_edges.csv"
-    vertices_file = cf + "_roads_vertices.csv"
+    edges_file = country + "_roads_edges.csv"
+    vertices_file = country + "_roads_vertices.csv"
     
     if edges_file in os.listdir(graph_path) or vertices_file in os.listdir(graph_path):
         print("Graph for " + country + " already stored.")
@@ -25,8 +24,8 @@ def makeGraph(country):
     else:
 
         try:
-            print("Starting process for" + country)
-            G = ox.graph_from_place(country, simplify=True, clean_periphery=True)
+            print("Starting process for " + country)
+            G = ox.graph_from_place(countries[country], simplify=True, clean_periphery=True)
 
             print("Retrieved graph for " + country + ", starting vertices storage")
             with open(graph_path + vertices_file, 'w') as roads_vertices:
@@ -56,7 +55,7 @@ def makeGraph(country):
             return False
 
 def main():
-    with multiprocessing.Pool() as pool:
+    with multiprocessing.Pool(1) as pool:
         pool.map(makeGraph, countries)        
 
 if __name__ == "__main__":
