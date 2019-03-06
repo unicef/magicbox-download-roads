@@ -5,31 +5,29 @@ import operator
 import osmnx as ox
 import sys, os, pickle
 import multiprocessing
+import json
 
 # imports only a dictionary of UNICEF programme countries mapped to country codes
-from iso_country_codes import CC
-from unicef_programme_countries import countries
+#from iso_country_codes import CC
+#from unicef_programme_countries import countries
+with open('countries.json') as f:
+    countries = json.load(f)
 
 ox.config(use_cache=True, log_console=True)
 weight = 'length'
 
 graph_storage_path = sys.argv[1]
 
-def makeIGraph(country_name):
+def makeIGraph(country):
 
-    try:
-        country_code = CC[country_name]
-    except:
-        print("Country name must be a valid UNICEF programme country, moving on ... ")
-        return False
-
-    graph_filename = graph_storage_path + "/" + country_code +  "_roads_igraph.p" 
-    if graph_filename in os.listdir(graph_storage_path):
-        print("Graph for " + country_name + " already stored.")
+    filename = country +  "_roads_igraph.p" 
+    graph_filename = graph_storage_path + "/" + country +  "_roads_igraph.p" 
+    if filename in os.listdir(graph_storage_path):
+        print("Graph for " + country + " already stored.")
         return False
 
     # create networkx graph
-    G_nx = ox.graph_from_place(country_name, network_type='all', simplify=True)
+    G_nx = ox.graph_from_place(countries[country], network_type='all', simplify=True)
     G_nx = nx.relabel.convert_node_labels_to_integers(G_nx)
 
     print("Converting downloaded roads graph to igraph")
@@ -58,7 +56,7 @@ def makeIGraph(country_name):
     print("Serializing igraph")
     pickle.dump(G_ig, open(graph_filename, "wb"))
 
-    print("igraph storage for " + country_name + " roads completed")
+    print("igraph storage for " + country + " roads completed")
     print(str(G_ig_num_v) + " vertices, " + str(G_ig_num_e) + " edges stored")
 
 def main():
